@@ -4,7 +4,7 @@ import { AdvogadoService } from "./Service/advogadoService";
 import test from "node:test";
 const cliente1 = new ClienteService();
 const advogado1 = new AdvogadoService();
-// sadffffffffffffffffffffffffffffffffffffffffffffff
+
 
 /*async function verClientes() {
   console.table(await cliente1.listarClientes());
