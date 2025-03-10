@@ -1,0 +1,11 @@
+{
+  "name": "escritorioadvprojeto",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsx src/index2.ts"
+  },
+  "author": "",
+  "license": "ISC"
+}

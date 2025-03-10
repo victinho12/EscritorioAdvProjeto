@@ -1,7 +1,6 @@
 import { Pool } from "pg";
 import { Database } from "./Database";
 import { Cliente } from "../Entity/Clientes";
-import { checkPrimeSync } from "crypto";
 
 export class ClienteRepository {
   private pool: Pool;
