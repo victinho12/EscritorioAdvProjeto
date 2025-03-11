@@ -6,11 +6,11 @@ import { ConsultasView } from "./view/ConsultasView";
 
 // const clienteview = new ClienteView()
 // clienteview.exibirMenu();
-
+//oieeee
 
 // const advogadoView = new AdvogadoView
 // advogadoView.exibirMenu();
 
 
-const consultasView = new ConsultasView
-consultasView.exibirMenu()
+// const consultasView = new ConsultasView
+// consultasView.exibirMenu()

@@ -17,11 +17,13 @@ export class ClienteRepository {
     const listaClientes: Cliente[] = [];
 
     for (let row of result.rows) {
+      console.log(row)
       let cliente = new Cliente(
+   
         row.cpf,
         row.nome,
         row.datanascimento,
-        row.observacoes
+        row.observacoes_cliente
       );
       listaClientes.push(cliente);
     }
@@ -40,7 +42,7 @@ export class ClienteRepository {
         row.cpf,
         row.nome,
         row.datanascimento,
-        row.observacoes
+        row.observacoes_cliente
       );
       buscarClientes.push(cliente);
     }
@@ -62,7 +64,7 @@ export class ClienteRepository {
       rows[0].cpf,
       rows[0].nome,
       rows[0].datanascimento,
-      rows[0].observacoes
+      rows[0].observacoes_cliente
     );
   }
 
