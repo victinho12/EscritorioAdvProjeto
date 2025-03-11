@@ -1,7 +1,6 @@
 import chalk, { Chalk } from "chalk";
 import { ClienteService } from "./Service/clienteService";
 import { AdvogadoService } from "./Service/advogadoService";
-import test from "node:test";
 const cliente1 = new ClienteService();
 const advogado1 = new AdvogadoService();
 

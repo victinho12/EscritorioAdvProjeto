@@ -6,7 +6,10 @@
   "scripts": {
     "start": "tsx src/index2.ts"
   },
+<<<<<<< HEAD
   "keywords": [],
+=======
+>>>>>>> b57968e77d6dba728aec8a4a63e3335fbb5e7258
   "author": "",
   "license": "ISC"
 }
