@@ -6,7 +6,7 @@ import { ConsultasView } from "./view/ConsultasView";
 
 // const clienteview = new ClienteView()
 // clienteview.exibirMenu();
-
+//oieeee
 
 // const advogadoView = new AdvogadoView
 // advogadoView.exibirMenu();
