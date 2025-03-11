@@ -12,5 +12,5 @@ import { ConsultasView } from "./view/ConsultasView";
 // advogadoView.exibirMenu();
 
 
-const consultasView = new ConsultasView
-consultasView.exibirMenu()
+// const consultasView = new ConsultasView
+// consultasView.exibirMenu()
