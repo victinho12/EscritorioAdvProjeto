@@ -44,7 +44,7 @@ export class ConsultasRepository {
 
 
   public async buscar_consulta_para_Advogado(id_advogado: number): Promise<Consultas[]> {
-    const query = "SELECT cpf_clientes, data_agendada, id_advogado ,horario from public.consultas where id_advogado = $1"
+    const query = "SELECT cpf_clientes, id_advogado, data_agendada ,horario from public.consultas where id_advogado = $1"
     const resultado = await this.pool.query(query, [id_advogado])
 
     const buscarConsultaAdv: Consultas[] = []
