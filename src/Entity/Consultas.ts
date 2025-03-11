@@ -1,4 +1,4 @@
-import { throws } from "assert"
+
 import { Advogados } from "./Advogado"
 export class Consultas{
     private cpf : string

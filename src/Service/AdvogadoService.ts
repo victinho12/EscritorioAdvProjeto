@@ -1,7 +1,5 @@
-import { UrlWithStringQuery } from "url";
 import { Advogados } from "../Entity/Advogado";
 import { AdvogadoRepository } from "../Repository/AdvogadoRepository";
-import { VoidExpression } from "typescript";
 
 export class AdvogadoService {
   private repo: AdvogadoRepository;

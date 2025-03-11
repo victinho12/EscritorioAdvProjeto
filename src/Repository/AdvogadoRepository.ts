@@ -1,7 +1,7 @@
 import { Pool } from "pg";
 import { Database } from "./Database";
 import { Advogados } from "../Entity/Advogado";
-import { NumberLiteralType } from "typescript";
+
 
 export class AdvogadoRepository {
   private pool: Pool;

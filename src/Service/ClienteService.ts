@@ -1,8 +1,5 @@
-import { promises } from "dns";
 import { Cliente } from "../Entity/Clientes";
 import { ClienteRepository } from "../Repository/Clienterepository";
-import { createInflate } from "zlib";
-import strict from "assert/strict";
 
 export class ClienteService {
   private repo: ClienteRepository;
