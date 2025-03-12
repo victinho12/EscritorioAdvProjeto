@@ -1,5 +1,5 @@
 
-import { Advogados } from "./Advogado"
+import { Advogados } from "./Lawyers"
 export class Consultas{
     private cpf_clientes : string
     private id_advogado: Advogados

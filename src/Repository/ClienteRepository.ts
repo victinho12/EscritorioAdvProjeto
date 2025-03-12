@@ -1,6 +1,6 @@
 import { Pool } from "pg";
 import { Database } from "./Database";
-import { Cliente } from "../Entity/Clientes";
+import { Cliente } from "../Entity/Custumers";
 
 export class ClienteRepository {
   private pool: Pool;

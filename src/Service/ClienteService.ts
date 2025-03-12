@@ -1,4 +1,4 @@
-import { Cliente } from "../Entity/Clientes";
+import { Cliente } from "../Entity/Custumers";
 import { ClienteRepository } from "../Repository/Clienterepository";
 
 export class ClienteService {

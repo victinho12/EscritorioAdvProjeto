@@ -4,9 +4,9 @@ import promptSync from "prompt-sync";
 import { ConsultasView } from "./view/ConsultasView";
 
 
-// const clienteview = new ClienteView()
-// clienteview.exibirMenu();
-//oieeee
+const clienteview = new ClienteView()
+clienteview.exibirMenu();
+
 
 // const advogadoView = new AdvogadoView
 // advogadoView.exibirMenu();

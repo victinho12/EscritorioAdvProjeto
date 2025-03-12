@@ -1,4 +1,4 @@
-import { Advogados } from "../Entity/Advogado";
+import { Advogados } from "../Entity/Lawyers";
 import { Client } from "pg";
 import { ConsultasRepository } from "../Repository/ConsultaRepository";
 import { Consultas } from "../Entity/Consultas";

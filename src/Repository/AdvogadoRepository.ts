@@ -1,6 +1,6 @@
 import { Pool } from "pg";
 import { Database } from "./Database";
-import { Advogados } from "../Entity/Advogado";
+import { Advogados } from "../Entity/Lawyers";
 
 
 export class AdvogadoRepository {
@@ -75,9 +75,9 @@ export class AdvogadoRepository {
   }
 
 
-  public async atualizarNome(id: number, nome: string): Promise<void> {
-    const query = "UPDATE public.advogados SET nome = $2 WHERE id = $1 "
-    const result = await this.pool.query(query, [id, nome])
+  public async atualizarNome(id: number, name: string): Promise<void> {
+    const query = "UPDATE public.advogados SET name = $2 WHERE id = $1 "
+    const result = await this.pool.query(query, [id, name])
   }
 
 

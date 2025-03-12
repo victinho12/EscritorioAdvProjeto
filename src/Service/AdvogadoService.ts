@@ -1,4 +1,4 @@
-import { Advogados } from "../Entity/Advogado";
+import { Advogados } from "../Entity/Lawyers";
 import { AdvogadoRepository } from "../Repository/AdvogadoRepository";
 
 export class AdvogadoService {
@@ -19,9 +19,9 @@ export class AdvogadoService {
   }
 
 
-  public async inserirAdv(nome: string, especialidade: string, email: string, telefone: number, situacao: string
+  public async inserirAdv(name: string, especialidade: string, email: string, telefone: number, situacao: string
   ) {
-    await this.repo.inserirAdvogado(nome, especialidade, email, telefone, situacao)
+    await this.repo.inserirAdvogado(name, especialidade, email, telefone, situacao)
   }
 
 
