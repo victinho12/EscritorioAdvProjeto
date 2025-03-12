@@ -11,6 +11,4 @@ export class Cliente {
     this.observacoes_cliente = observacoes_cliente;
   }
 
-
-  
 }
