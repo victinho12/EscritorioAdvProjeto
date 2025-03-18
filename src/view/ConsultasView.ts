@@ -1,12 +1,14 @@
 //IMPORTANDO DADOS
+import { ClienteService } from "../Service/ClienteService";
 import { AdvogadoService } from "../Service/AdvogadoService";
 import { ConsultasService } from "../Service/consultasService";
 import promptSync from "prompt-sync";
 
 //CLASSE CONSULTAS VIEW
 export class ConsultasView {
-    private advogados: AdvogadoService
+    private advogados: AdvogadoService;
     private consultas: ConsultasService;
+    private clientes: ClienteService;
     private prompt: promptSync;
 
     //CONSTRUTOR DA CLASSE
@@ -14,7 +16,8 @@ export class ConsultasView {
         this.prompt = promptSync();
         this.consultas = new ConsultasService();
         this.advogados = new AdvogadoService();
-    }
+        this.clientes = new ClienteService();
+    }   
 
     //METODO QUE EXIBE O MENU PARA O CLIENTE
     public async exibirMenu(): Promise<void> {
@@ -83,6 +86,12 @@ export class ConsultasView {
                 
                 switch (mudarCliente){
                     case "1":// MUDA O CPF
+                        console.log("")
+                        console.log("Tabela de consultas")
+                        console.table(await this.consultas.listarTodasConsultas())
+                        console.log("")
+                        console.log("Tabela de advogados")
+                        console.table(await this.clientes.listarClientes())
                         let pergunta_mudar_cpf = this.prompt("Digite qual o cpf que deseja mudar: ")
                         let pergunta_botar_cpf = this.prompt("Digite qual cpf deseja botar: ")
                         await this.consultas.mudar_cpf_cliente(pergunta_mudar_cpf,pergunta_botar_cpf)
@@ -90,20 +99,44 @@ export class ConsultasView {
                         break;
 
                     case "2":// MUDA OS ADVOGADOS
-                        console.log("Tabela de consultas")
                         console.log("")
+                        console.log("Tabela de consultas")
                         console.table(await this.consultas.listarTodasConsultas())
                         console.log("")
                         console.log("Tabela de advogados")
-                        console.log("")
                         console.table(await this.advogados.listarAdvogados())
+                   
                         let pergunta_mudar_advogado = this.prompt("Digite o id da consulta que deseja mudar: ")
                         let pergunta_botar_advogado = this.prompt("Digite o id do advogado para botar: ")
                         await this.consultas.mudar_advogado(pergunta_mudar_advogado,pergunta_botar_advogado)
                         this.exibirMenu()
                         break;
-                    case "3":// MUDA A DATA
-                        
+
+
+                    case "3": // MUDA A DATA
+                        console.log("")
+                        console.log("Tabela de consultas")
+                        console.table(await this.consultas.listarTodasConsultas())
+                        console.log("")
+                        console.log("Tabela de advogados")
+                        console.table(await this.advogados.listarAdvogados())
+                        let pergunta_mudar_data = this.prompt("Digite o id da consulta que deseja mudar: ")
+                        let pergunta_botar_data = this.prompt("Digite para botar a data desejada: ")
+                        await this.consultas.mudar_data(pergunta_mudar_data,pergunta_botar_data)
+                        this.exibirMenu()
+                        break;
+    
+
+                    case "4":// MUDA O HORARIO
+                        console.log("")
+                        console.log("Tabela de consultas")
+                        console.table(await this.consultas.listarTodasConsultas())
+                        console.log("")
+                        console.log("Tabela de advogados")
+                        console.table(await this.advogados.listarAdvogados())
+                        let pergunta_mudar_horario = this.prompt("Digite o id da consulta que deseja mudar: ")
+                        let pergunta_botar_horario = this.prompt("Digite o horario que deseja botar: ")
+                        await this.consultas.mudar_horario(pergunta_mudar_horario,pergunta_botar_horario)
                 }
         }
     }

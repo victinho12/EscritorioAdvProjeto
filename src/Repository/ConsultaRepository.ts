@@ -1,4 +1,5 @@
 //IMPORTANDO DADOS
+import { Advogados } from "../Entity/Advogado";
 import { Pool } from "pg";
 import { Consultas } from "../Entity/Consultas";
 import { Database } from "./Database";
@@ -22,7 +23,6 @@ export class ConsultasRepository {
     const todasConsultas: Consultas[] = [];
 
     for (let row of result.rows) {
-      console.log(row)
       let constultas = new Consultas(
         row.id, row.cpf_clientes, row.id_advogado, row.data_agendada, row.horario
       )
@@ -111,13 +111,18 @@ export class ConsultasRepository {
   }
 
 
+  // METODO QUE MUDA A DATA DA CONSULTA
+  public async mudar_data(id:number, data_agendada:Date){
+    const query = "update public.consultas set data_agendada = $2 where id = $1 "
+    const result = await this.pool.query(query, [id, data_agendada])
+  }
+
   //METODO USADO PARA MUDAR O HORARIO DA CONSULTA
   public async mudar_horario(id:number, horario: Date){
     const query = "UPDATE public.consultas SET horario = $2 WHERE id = $1 "
     const result = await this.pool.query(query, [id, horario])
     return result.rows
   }
+    
 
-
-  //METODO QUE 
 }

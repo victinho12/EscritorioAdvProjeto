@@ -47,10 +47,15 @@ export class ConsultasService {
         await this.repo.mudar_advogado(id, id_advogados2)
     }
 
-    // METODO USADO PARA MUDAR O HORARIO
-    public async mudar_horario(id:number, horario:Date){
-        await this.repo.mudar_horario(id,horario)
+    // METODO QUE MUDA A DATA
+    public async mudar_data(id: number, data_agendada: Date) {
+        await this.mudar_data(id, data_agendada)
     }
-    
+
+
+    // METODO USADO PARA MUDAR O HORARIO
+    public async mudar_horario(id: number, horario: Date) {
+        await this.repo.mudar_horario(id, horario)
+    }
 
 }
