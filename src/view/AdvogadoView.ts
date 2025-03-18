@@ -1,22 +1,28 @@
+//IMPORTANDO DADOS
 import promptSync from "prompt-sync";
 import { AdvogadoService } from "../Service/AdvogadoService";
 
-
+//CLASSE ADVOGADO VIEW
 export class AdvogadoView {
   private Advogado: AdvogadoService;
   private prompt: promptSync;
+
+
+  // CONSTRUTOR DA CLASSE 
   constructor() {
     this.prompt = promptSync();
     this.Advogado = new AdvogadoService();
   }
-  public verificarEmail(email): void {
+
+  // METOD QUE VERIFICA SE O EMAIL DO CLIENTE ESTÁ CORRETO
+  public verificarEmail(email:string): void {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(email)) {
       console.log("Email está invalido tente novamente");
       this.exibirMenu();
     }
   }
-
+  // METODO QUE EXIBE O MENU PARA O USUARIO
   public async exibirMenu(): Promise<void> {
     console.log("======================================");
     console.log("")
@@ -80,8 +86,8 @@ export class AdvogadoView {
         let perguntaAtualizarAdv = this.prompt("Digite oq vc deseja mudar de um advogado: ")
         switch (perguntaAtualizarAdv) {
 
-
-          case "1":
+         
+          case "1":// MUDA O NOME DO ADVOGADO
             let perguntaIdMudar1 = this.prompt("Digite o id do advogado: ")
             let perguntaMudarNome = this.prompt("Digite o nome que quer botar: ")
             await this.Advogado.atualizarNomeAdv(perguntaIdMudar1, perguntaMudarNome)
@@ -89,7 +95,7 @@ export class AdvogadoView {
             break;
 
 
-          case "2":
+          case "2":// MUDA A SUA ESPECIALIDADE
             let perguntaIdMudarEspecialida = this.prompt("Digite o id do advogado: ")
             let perguntaMudarEspecialidade = this.prompt("Digite a especialidade que quer botar: ")
             await this.Advogado.atualizarEspecialidadeAdv(perguntaIdMudarEspecialida, perguntaMudarEspecialidade)
@@ -97,14 +103,14 @@ export class AdvogadoView {
             break;
 
 
-          case "3":
+          case "3":// MUDA O SEU EMAIL
             let perguntaIdMudar3 = this.prompt("Digite o id do advogado: ")
             let perguntaMudarEmail = this.prompt("Digite o email que você quer botar: ")
             await this.Advogado.atualizarEmailAdv(perguntaIdMudar3, perguntaMudarEmail)
             this.exibirMenu()
             break;
 
-          case "4":
+          case "4":// MUDA O SEU TELEFONE
             let perguntaIdMudar4 = this.prompt("Digite o id do advogado: ")
             let perguntaMudarTelefone = this.prompt("Digite o telefone que quer botar: ")
             await this.Advogado.atualizarTelefoneAdv(perguntaIdMudar4, perguntaMudarTelefone)
@@ -112,16 +118,16 @@ export class AdvogadoView {
             break;
 
 
-          case "5":
+          case "5":// MUDA A SUA SITUAÇÃO
             let perguntaIdMudar5 = this.prompt("Digite o id do advogado: ")
             let perguntaMudarSituacao = this.prompt("Digite a situacão do advogado que quer botar: ")
             await this.Advogado.atualizarSituacao(perguntaIdMudar5,perguntaMudarSituacao)
 
-          case "6":
+          case "6"://VOLTA PARA O MENU
             this.exibirMenu()
         }
         break;
-        case "6":
+        case "6"://SAI DO SISTEMA
           process.exit
     }
   }

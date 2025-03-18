@@ -1,14 +1,20 @@
+// IMPORTA OS DADOS
 import promptSync from "prompt-sync";
 import { ClienteService } from "../Service/ClienteService";
+import { executionAsyncId } from "async_hooks";
 
+//CLASSE CLIENTE VIEW
 export class ClienteView {
   private Cliente: ClienteService;
   private prompt: promptSync;
+
+  // CONSTRUTOR DA CLASSE
   constructor() {
     this.prompt = promptSync();
     this.Cliente = new ClienteService();
   }
 
+  //METODO QUE EXIBE O MENU PARA O CLIENTE
 
   public async exibirMenu(): Promise<void> {
     console.log("======================================");
@@ -65,7 +71,7 @@ export class ClienteView {
 
 
         break;
-      case "5":
+      case "5":// MOSTRA O MENU DE ATUALIZAÇÃO
         console.log("======================================");
         console.log("")
         console.log("1-Mudar cpf do Cliente ");
@@ -111,7 +117,7 @@ export class ClienteView {
 
 
             break;
-          case "4":
+          case "4":// MUDA AS OBS DO CLIENTE
             let perguntaCpf = this.prompt("Digite o cpf do cliente: ");
             let perguntaMudarObs = this.prompt("Digite o que deseja mudar na obs: ");
             await this.Cliente.mudarObservacoes(perguntaCpf, perguntaMudarObs);
@@ -119,18 +125,20 @@ export class ClienteView {
 
 
             break;
-          case "5":
+          case "5":// VOLTA PARA O MENU
             this.exibirMenu();
         }
 
 
         break;
-      case "6":
+      case "6"://SAI DO SISTEMA
         process.exit;
     }
   }
 
 
+
+  
   private validarCpf(cpf: string): boolean {
     // Remover caracteres não numéricos
     cpf = cpf.replace(/\D/g, "");
@@ -138,6 +146,7 @@ export class ClienteView {
     // Verificar se tem 11 dígitos e não é uma sequência repetida (ex: "111.111.111-11")
     if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) {
       console.log("CPF está inválido, tente novamente");
+      this.exibirMenu()
       return false;
     }
 
@@ -161,6 +170,7 @@ export class ClienteView {
       return true;
     } else {
       console.log("CPF está inválido, tente novamente");
+      this.exibirMenu()
       return false;
     }
   }

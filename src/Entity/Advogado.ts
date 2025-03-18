@@ -1,17 +1,17 @@
 
 //exportando para outros arquivos
 export class Advogados {
-    //atributos da classe
-  private id : number
+  //atributos da classe
+  private id: number
   private nome: string;
   private Especialidade: string;
   private Email: string;
   private Telefone: number;
-  private situacao : string;
-  
-//construtor da classe
+  private situacao: string;
+
+  //construtor da classe
   constructor(
-    id :number,
+    id: number,
     nome: string,
     especialidade: string,
     email: string,

@@ -6,11 +6,16 @@ import { ConsultasView } from "./view/ConsultasView";
 
 // const clienteview = new ClienteView()
 // clienteview.exibirMenu();
-//oieeee
+
 
 // const advogadoView = new AdvogadoView
 // advogadoView.exibirMenu();
 
 
-// const consultasView = new ConsultasView
-// consultasView.exibirMenu()
+const consultasView = new ConsultasView
+consultasView.exibirMenu()
+
+
+
+//select consultas.id,cpf_clientes, advogados.id ,nome, email, situacao, id_advogado from public.consultas
+//join public.advogados on consultas.id_advogado = advogados.id 
