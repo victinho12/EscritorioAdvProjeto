@@ -43,7 +43,9 @@ export class ConsultasView {
 
 
             case "2":// INSERE UMA CONSULTA
+                console.table(await this.clientes.listarClientes())
                 let perguntaCpfClient = this.prompt("Digite o Cpf: ")
+                console.table(await this.advogados.listarAdvogados())
                 let perguntaIdAdvogado = this.prompt("Digite o id do advogado: ")
                 let pergunta_data_para_agendar = this.prompt("Digite uma data para agendar: ")
                 let pergunta_horario_para_agendar = this.prompt("Digite um horario para agendar: ")
@@ -137,7 +139,16 @@ export class ConsultasView {
                         let pergunta_mudar_horario = this.prompt("Digite o id da consulta que deseja mudar: ")
                         let pergunta_botar_horario = this.prompt("Digite o horario que deseja botar: ")
                         await this.consultas.mudar_horario(pergunta_mudar_horario,pergunta_botar_horario)
+                        break;
+
+                    case "5":
+                        this.exibirMenu()
+                        break;
                 }
+                break;
+            
+            case "7":
+                process.exit
         }
     }
 }
