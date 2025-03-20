@@ -8,12 +8,12 @@ import { ConsultasView } from "./view/ConsultasView";
 // clienteview.exibirMenu();
 
 
-// const advogadoView = new AdvogadoView
-// advogadoView.exibirMenu();
+const advogadoView = new AdvogadoView
+advogadoView.exibirMenu();
 
 
-const consultasView = new ConsultasView
-consultasView.exibirMenu()
+// const consultasView = new ConsultasView
+// consultasView.exibirMenu()
 
 
 

@@ -11,8 +11,20 @@ export class PagamentosRepository {
   }
 
   //METODO QUE LISTA TODOS OS PAGAMENTOS
-  public async listar_pagamentos(): Promise<Pagamentos[]> {
-    const query = "SELECT * FROM PUBLIC.pagamentos";
+  public async lista_pagamento(): Promise<Pagamentos[]> {
+    const query = "SELECT * FROM PUBLIC.pagamentos order by id asc";
     const result = await this.pool.query(query);
+    const listaPagamento: Pagamentos[] = [];
+    for (let row of result.rows) {
+      let pagamento = new Pagamentos(
+         row.id_consulta,
+         row.valor,
+         row.data_pagamento,
+         row.metodo_pagamento
+      );
+      listaPagamento.push(pagamento);
+    }
+    return listaPagamento;
   }
+  
 }

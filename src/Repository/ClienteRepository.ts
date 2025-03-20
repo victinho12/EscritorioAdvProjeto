@@ -18,7 +18,6 @@ export class ClienteRepository {
     const listaClientes: Cliente[] = [];
 
     for (let row of result.rows) {
-      console.log(row)
       let cliente = new Cliente(
 
         row.cpf,

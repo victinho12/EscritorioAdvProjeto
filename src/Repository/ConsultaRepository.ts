@@ -17,7 +17,7 @@ export class ConsultasRepository {
 
   //METODO USADO PARA LISTAR TODAS AS CONSULTAS
   public async listarConsultas(): Promise<Consultas[]> {
-    const query = "SELECT * FROM PUBLIC.consultas";
+    const query = "SELECT * FROM PUBLIC.consultas order by id asc";
     const result = await this.pool.query(query);
 
     const todasConsultas: Consultas[] = [];

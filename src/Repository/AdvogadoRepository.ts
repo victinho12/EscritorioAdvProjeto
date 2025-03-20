@@ -12,7 +12,7 @@ export class AdvogadoRepository {
   }
   //METODO LISTAR ADVOGADO
   async listaAdvogados(): Promise<Advogados[]> {
-    const query = "SELECT * FROM PUBLIC.advogados";
+    const query = "SELECT * FROM PUBLIC.advogados order by id asc";
     const result = await this.pool.query(query);
 
     const listaAdvogados: Advogados[] = [];

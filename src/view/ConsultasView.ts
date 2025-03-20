@@ -17,7 +17,22 @@ export class ConsultasView {
         this.consultas = new ConsultasService();
         this.advogados = new AdvogadoService();
         this.clientes = new ClienteService();
-    }   
+    }
+
+    // METODO USADO PARA LISTAR OS CLIENTES PARA CONSULTAS
+    public async listar_clientes(){
+        console.table(this.clientes.listarClientes())
+    }
+
+    // METODO USADO PARA LISTAR OS ADVOGADOS PARA CONSULTAS
+    public async listar_advogados(){
+        console.table(this.advogados.listarAdvogados())
+    }
+
+    //METODO USADO PARA LISTAR TODAS AS CONSULTAS 
+    public async listar_consultas(){
+        console.table(this.consultas.listarTodasConsultas())
+    }
 
     //METODO QUE EXIBE O MENU PARA O CLIENTE
     public async exibirMenu(): Promise<void> {
@@ -43,10 +58,20 @@ export class ConsultasView {
 
 
             case "2":// INSERE UMA CONSULTA
-                console.table(await this.clientes.listarClientes())
+                console.log("")
+                console.log("Tabela Clientes:")
+
+                await this.listar_clientes()
                 let perguntaCpfClient = this.prompt("Digite o Cpf: ")
-                console.table(await this.advogados.listarAdvogados())
+                console.log("")
+                console.log("Tabela Advogados:")
+
+                await this.listar_advogados()
                 let perguntaIdAdvogado = this.prompt("Digite o id do advogado: ")
+
+                console.log("Consultas ja agendadas:")
+
+                await this.listar_consultas()
                 let pergunta_data_para_agendar = this.prompt("Digite uma data para agendar: ")
                 let pergunta_horario_para_agendar = this.prompt("Digite um horario para agendar: ")
                 await this.consultas.inserirConsulta(perguntaCpfClient, perguntaIdAdvogado, pergunta_data_para_agendar, pergunta_horario_para_agendar)
@@ -68,7 +93,7 @@ export class ConsultasView {
                 break;
 
             case "5":// DELETA AS CONSULTAS INDESEJADAS
-               console.table(await this.consultas.listarTodasConsultas())
+                console.table(await this.consultas.listarTodasConsultas())
                 let pergunta_consulta_deletar = this.prompt("Digite o id da consulta que quer deletar: ")
                 await this.consultas.deletar_consulta(pergunta_consulta_deletar)
                 this.exibirMenu();
@@ -85,8 +110,8 @@ export class ConsultasView {
                 console.log("======================================");
                 console.log("")
                 let mudarCliente = this.prompt("Qual opção do cliente deseja mudar? ");
-                
-                switch (mudarCliente){
+
+                switch (mudarCliente) {
                     case "1":// MUDA O CPF
                         console.log("")
                         console.log("Tabela de consultas")
@@ -96,7 +121,7 @@ export class ConsultasView {
                         console.table(await this.clientes.listarClientes())
                         let pergunta_mudar_cpf = this.prompt("Digite qual o cpf que deseja mudar: ")
                         let pergunta_botar_cpf = this.prompt("Digite qual cpf deseja botar: ")
-                        await this.consultas.mudar_cpf_cliente(pergunta_mudar_cpf,pergunta_botar_cpf)
+                        await this.consultas.mudar_cpf_cliente(pergunta_mudar_cpf, pergunta_botar_cpf)
                         this.exibirMenu();
                         break;
 
@@ -107,13 +132,13 @@ export class ConsultasView {
                         console.log("")
                         console.log("Tabela de advogados")
                         console.table(await this.advogados.listarAdvogados())
-                   
+
                         let pergunta_mudar_advogado = this.prompt("Digite o id da consulta que deseja mudar: ")
                         let pergunta_botar_advogado = this.prompt("Digite o id do advogado para botar: ")
-                        await this.consultas.mudar_advogado(pergunta_mudar_advogado,pergunta_botar_advogado)
+                        await this.consultas.mudar_advogado(pergunta_mudar_advogado, pergunta_botar_advogado)
                         this.exibirMenu()
                         break;
-
+                        965432109
 
                     case "3": // MUDA A DATA
                         console.log("")
@@ -124,10 +149,10 @@ export class ConsultasView {
                         console.table(await this.advogados.listarAdvogados())
                         let pergunta_mudar_data = this.prompt("Digite o id da consulta que deseja mudar: ")
                         let pergunta_botar_data = this.prompt("Digite para botar a data desejada: ")
-                        await this.consultas.mudar_data(pergunta_mudar_data,pergunta_botar_data)
+                        await this.consultas.mudar_data(pergunta_mudar_data, pergunta_botar_data)
                         this.exibirMenu()
                         break;
-    
+
 
                     case "4":// MUDA O HORARIO
                         console.log("")
@@ -138,7 +163,7 @@ export class ConsultasView {
                         console.table(await this.advogados.listarAdvogados())
                         let pergunta_mudar_horario = this.prompt("Digite o id da consulta que deseja mudar: ")
                         let pergunta_botar_horario = this.prompt("Digite o horario que deseja botar: ")
-                        await this.consultas.mudar_horario(pergunta_mudar_horario,pergunta_botar_horario)
+                        await this.consultas.mudar_horario(pergunta_mudar_horario, pergunta_botar_horario)
                         break;
 
                     case "5":
@@ -146,7 +171,7 @@ export class ConsultasView {
                         break;
                 }
                 break;
-            
+
             case "7":
                 process.exit
         }
