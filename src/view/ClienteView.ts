@@ -1,7 +1,7 @@
 // IMPORTA OS DADOS
 import promptSync from "prompt-sync";
 import { ClienteService } from "../Service/ClienteService";
-import { executionAsyncId } from "async_hooks";
+
 
 //CLASSE CLIENTE VIEW
 export class ClienteView {

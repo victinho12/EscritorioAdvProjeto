@@ -2,6 +2,7 @@
 import { Advogados } from "../Entity/Advogado";
 import { ConsultasRepository } from "../Repository/ConsultaRepository";
 import { Consultas } from "../Entity/Consultas";
+import { Cliente } from "../Entity/Clientes";
 
 //CLASSE CONSULTAS SERVICE
 export class ConsultasService {
@@ -18,7 +19,7 @@ export class ConsultasService {
     }
 
     // METODO INSERE CONSULTAS
-    public async inserirConsulta(cpf_clientes: string, id_advogado: Advogados, dataAgendada: Date, horario: Date) {
+    public async inserirConsulta(cpf_clientes: number, id_advogado: Advogados, dataAgendada: Date, horario: Date) {
         return await this.repo.inserirConsulta(cpf_clientes, id_advogado, dataAgendada, horario)
     }
 

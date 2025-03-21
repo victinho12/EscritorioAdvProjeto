@@ -12,7 +12,7 @@ export class ClienteRepository {
 
   //METODO USADO PARA LISTAR TODOS OS CLIENTES
   public async listarClientes(): Promise<Cliente[]> {
-    const query = "SELECT * FROM PUBLIC.CLIENTES";
+    const query = "SELECT * FROM PUBLIC.CLIENTES order by cpf asc";
     const result = await this.pool.query(query);
 
     const listaClientes: Cliente[] = [];

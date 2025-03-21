@@ -21,17 +21,17 @@ export class ConsultasView {
 
     // METODO USADO PARA LISTAR OS CLIENTES PARA CONSULTAS
     public async listar_clientes(){
-        console.table(this.clientes.listarClientes())
+        console.table(await this.clientes.listarClientes())
     }
 
     // METODO USADO PARA LISTAR OS ADVOGADOS PARA CONSULTAS
     public async listar_advogados(){
-        console.table(this.advogados.listarAdvogados())
+        console.table(await this.advogados.listarAdvogados())
     }
 
     //METODO USADO PARA LISTAR TODAS AS CONSULTAS 
     public async listar_consultas(){
-        console.table(this.consultas.listarTodasConsultas())
+        console.table(await this.consultas.listarTodasConsultas())
     }
 
     //METODO QUE EXIBE O MENU PARA O CLIENTE
@@ -138,7 +138,7 @@ export class ConsultasView {
                         await this.consultas.mudar_advogado(pergunta_mudar_advogado, pergunta_botar_advogado)
                         this.exibirMenu()
                         break;
-                        965432109
+                        
 
                     case "3": // MUDA A DATA
                         console.log("")
