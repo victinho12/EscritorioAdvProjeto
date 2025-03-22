@@ -1,5 +1,6 @@
 // IMPORTA OS DADOS
 import promptSync from "prompt-sync";
+
 import { ClienteService } from "../Service/ClienteService";
 
 
@@ -13,6 +14,12 @@ export class ClienteView {
     this.prompt = promptSync();
     this.Cliente = new ClienteService();
   }
+
+   // METODO USADO PARA LISTAR OS CLIENTES PARA CONSULTAS
+   public async listar_clientes(){
+    console.table(await this.Cliente.listarClientes())
+   }
+
 
   //METODO QUE EXIBE O MENU PARA O CLIENTE
 
@@ -37,7 +44,6 @@ export class ClienteView {
         break;
       case "2": //METODO USADO PARA ADICIONAR UM CLIENTE;
         let perguntaCpf = this.prompt("Digite o Cpf: ");
-        this.validarCpf(perguntaCpf);
         let perguntaNome = this.prompt("Digite o nome: ");
         let perguntaDataNascimento = this.prompt("Digite a data de nascimento: ");
         let perguntaMotivoConsulta = this.prompt("Digite o motivo da consulta: ");
@@ -63,6 +69,7 @@ export class ClienteView {
 
         break;
       case "4": //METODO USADO PARA DELETAR UM CLIENTE
+        await this.listar_clientes()
         let perguntaCpfDeletar = this.prompt("digite o cpf para deletar: ");
         console.log("Cliente deletado com sucesso!",
           await this.Cliente.deletarCliente(perguntaCpfDeletar)
@@ -87,7 +94,6 @@ export class ClienteView {
           case "1": //MUDAR O CPF DO CLIENTE
             let perguntaCpfMudar = this.prompt("Digite o cpf que quer procurar e mudar: ");
             let perguntaCpfBotar = this.prompt("Digite o cpf que quer botar pra o cliente: ");
-            this.validarCpf(perguntaCpfBotar);
             await this.Cliente.mudarCpfCliente(
               perguntaCpfMudar,
               perguntaCpfBotar
@@ -127,51 +133,18 @@ export class ClienteView {
             break;
           case "5":// VOLTA PARA O MENU
             this.exibirMenu();
+            default:
+                console.log("Não temos essa opção!!")
+                this.exibirMenu()
         }
 
 
         break;
       case "6"://SAI DO SISTEMA
-        process.exit;
-    }
-  }
-
-
-
-  
-  private validarCpf(cpf: string): boolean {
-    // Remover caracteres não numéricos
-    cpf = cpf.replace(/\D/g, "");
-
-    // Verificar se tem 11 dígitos e não é uma sequência repetida (ex: "111.111.111-11")
-    if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) {
-      console.log("CPF está inválido, tente novamente");
-      this.exibirMenu()
-      return false;
-    }
-
-    // Função para calcular os dígitos verificadores
-    const calcularDigito = (baseCpf: string, pesoInicial: number): number => {
-      let soma = 0;
-      for (let i = 0; i < baseCpf.length; i++) {
-        soma += parseInt(baseCpf[i]) * (pesoInicial - i);
-      }
-      let resto = soma % 11;
-      return resto < 2 ? 0 : 11 - resto;
-    };
-
-    // Calcular os dois dígitos verificadores
-    const digito1 = calcularDigito(cpf.substring(0, 9), 10);
-    const digito2 = calcularDigito(cpf.substring(0, 10), 11);
-
-    // Verificar se os dígitos calculados batem com os fornecidos no CPF
-    if (digito1 === parseInt(cpf[9]) && digito2 === parseInt(cpf[10])) {
-      console.log("CPF válido!");
-      return true;
-    } else {
-      console.log("CPF está inválido, tente novamente");
-      this.exibirMenu()
-      return false;
+        process.exit();
+        default:
+                console.log("Não temos essa opção!!")
+                this.exibirMenu()
     }
   }
 }

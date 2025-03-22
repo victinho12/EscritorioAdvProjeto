@@ -72,15 +72,15 @@ export class ClienteRepository {
 
 
   //METODO USADO PARA DELETAR UM CLIENTE DO SISTEMA
-  public async deletarCliente(cpf: string): Promise<Cliente[]> {
+  public async deletarCliente(cpf: string):Promise<Cliente[]>{
     const query = "delete from public.clientes where clientes.cpf ilike $1";
     const result = await this.pool.query(query, [cpf]);
-    return result.rows;
+    return result.rows
   }
 
 
   //METODO USADO PARA MUDAR O CPF DO CLIETNE
-  public async mudarCpfCliente(cpf: string, cpf2: string) {
+  public async mudarCpfCliente(cpf: string, cpf2: string):Promise<Cliente[]> {
     const query = "UPDATE public.clientes SET cpf = $2 WHERE cpf = $1 "
     const result = await this.pool.query(query, [cpf, cpf2])
     return result.rows

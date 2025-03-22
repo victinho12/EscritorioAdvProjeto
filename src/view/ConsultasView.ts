@@ -169,11 +169,17 @@ export class ConsultasView {
                     case "5":
                         this.exibirMenu()
                         break;
+                        default:
+                            console.log("Não temos essa opção!!")
+                            this.exibirMenu()
                 }
                 break;
 
             case "7":
-                process.exit
+                process.exit()
+            default:
+                console.log("Não temos essa opção!!")
+                this.exibirMenu()
         }
     }
 }

@@ -4,8 +4,8 @@ import { PagamentosView } from "./view/PagamentosView";
 import { ConsultasView } from "./view/ConsultasView";
 
 
-// const clienteview = new ClienteView
-// clienteview.exibirMenu();
+const clienteview = new ClienteView
+clienteview.exibirMenu();
 
 
 // const advogadoView = new AdvogadoView
@@ -15,8 +15,8 @@ import { ConsultasView } from "./view/ConsultasView";
 // const consultasView = new ConsultasView
 // consultasView.exibirMenu()
 
-const pagamentosView = new PagamentosView
-pagamentosView.exibirMenu()
+// const pagamentosView = new PagamentosView
+// pagamentosView.exibirMenu()
 
 
 //select consultas.id,cpf_clientes, advogados.id ,nome, email, situacao, id_advogado from public.consultas

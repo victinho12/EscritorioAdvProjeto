@@ -140,13 +140,19 @@ export class AdvogadoView {
             let perguntaIdMudar5 = this.prompt("Digite o id do advogado: ")
             let perguntaMudarSituacao = this.prompt("Digite a situacão do advogado que quer botar: ")
             await this.Advogado.atualizarSituacao(perguntaIdMudar5,perguntaMudarSituacao)
-
+            break;
+            default:
+                console.log("Não temos essa opção!!")
+                this.exibirMenu()
           case "6"://VOLTA PARA O MENU
             this.exibirMenu()
         }
         break;
         case "6"://SAI DO SISTEMA
           process.exit
+          default:
+                console.log("Não temos essa opção!!")
+                this.exibirMenu()
     }
   }
 }
