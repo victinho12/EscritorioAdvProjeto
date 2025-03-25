@@ -149,7 +149,7 @@ export class AdvogadoView {
         }
         break;
         case "6"://SAI DO SISTEMA
-          process.exit
+          process.exit()
           default:
                 console.log("Não temos essa opção!!")
                 this.exibirMenu()

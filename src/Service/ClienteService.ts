@@ -1,7 +1,8 @@
 //IMPORTANDO DADOS
+import { error } from "console";
 import { Cliente } from "../Entity/Clientes";
 import { ClienteRepository } from "../Repository/ClienteRepository";
-
+import { Validacoes } from "../Util/Verificacoes";
 
 //CLASSE CLIETNE SERVICE
 export class ClienteService {
@@ -39,14 +40,14 @@ export class ClienteService {
     datanascimento: string,
     observacoes: string
   ) {
-    if (!this.validarCPF(cpf)) {
+    if (!Validacoes.validar_CPF(cpf)) {
       throw new Error("CPF inválido");
     }
     return await this.repo.inserirCliente(
       cpf,
-      nome,
+      Validacoes.arrumar_texto(nome),
       datanascimento,
-      observacoes
+      Validacoes.arrumar_texto(observacoes)
     );
   }
 
@@ -64,10 +65,16 @@ export class ClienteService {
 
 
   //METODO QUE MUDA O CPF DO CLIENTE 
-  public async mudarCpfCliente(cpf: string, cpf2: string): Promise<Cliente[]> {
-    let lista: Cliente[] = []
-    lista = await this.repo.mudarCpfCliente(cpf, cpf2)
-    return lista;
+  public async mudarCpfCliente(cpf: string, cpf2: string) {
+    let cliente = this.buscarClientesPorCpf(cpf)
+    if (!cliente){
+      throw new error ("Cliente não encontrado!!")
+    }
+    if(!Validacoes.validar_CPF(cpf2)){
+      throw new error ("Cliente não pode ser adicionado pois não existe")
+    }
+    await this.repo.mudarCpfCliente(cpf, cpf2)
+    
   }
 
 
@@ -89,24 +96,4 @@ export class ClienteService {
     await this.repo.mudarObservacoes(cpf, observacoes)
   }
 
-
-  // Método para validar CPF
-  private validarCPF(cpf: string): boolean {
-    cpf = cpf.replace(/[^\d]/g, ""); // Remove caracteres não numéricos
-    if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return false;
-
-    let soma = 0, resto;
-    for (let i = 1; i <= 9; i++) soma += parseInt(cpf[i - 1]) * (11 - i);
-    resto = (soma * 10) % 11;
-    if (resto === 10 || resto === 11) resto = 0;
-    if (resto !== parseInt(cpf[9])) return false;
-
-    soma = 0;
-    for (let i = 1; i <= 10; i++) soma += parseInt(cpf[i - 1]) * (12 - i);
-    resto = (soma * 10) % 11;
-    if (resto === 10 || resto === 11) resto = 0;
-    if (resto !== parseInt(cpf[10])) return false;
-
-    return true;
-  }
 }
