@@ -29,10 +29,12 @@ export class AdvogadoRepository {
     }
     return listaAdvogados;
   }
+
+
   //METODO PARA BUSCAR UM ADVOGADO NA TABELA DO BANCO DE DADOS
-  public async buscarAdvPorId(id: number): Promise<Advogados[]> {
-    const query = "select * from public.advogados where id = $1";
-    const result = await this.pool.query(query, [id]);
+  public async buscarAdvPorId(email: string): Promise<Advogados[]> {
+    const query = "select * from public.advogados where email = $1";
+    const result = await this.pool.query(query, [email]);
 
     const listaAdv: Advogados[] = [];
 
@@ -73,38 +75,43 @@ export class AdvogadoRepository {
 
 
   //METODO USADO PARA DELETAR UM ADVOGADO DO SISTEMA
-  public async deletarAdvogado(id: number): Promise<void> {
-    const query = "delete from public.advogados where advogados.id = $1";
-    const result = await this.pool.query(query, [id]);
+  public async deletarAdvogado(email: string): Promise<void> {
+    const query = "delete from public.advogados where advogados.email = $1";
+    const result = await this.pool.query(query, [email]);
   }
+
 
   //METODO USADO PARA ATUALIZAR ALGO DO ADVOGADO
-  public async atualizarNome(id: number, nome: string): Promise<void> {
-    const query = "UPDATE public.advogados SET nome = $2 WHERE id = $1 "
-    const result = await this.pool.query(query, [id, nome])
+  public async atualizarNome(email: string, nome: string): Promise<void> {
+    const query = "UPDATE public.advogados SET nome = $2 WHERE email = $1 "
+    const result = await this.pool.query(query, [email, nome])
   }
+
 
   //METODO QUE ATUALIZA ESPECIALIDADE
-  public async atualizarEspecialidade(id: number, especialidade: string): Promise<void> {
-    const query = "UPDATE public.advogados SET especialidade = $2 WHERE id = $1 "
-    const result = await this.pool.query(query, [id, especialidade])
+  public async atualizarEspecialidade(email: string, especialidade: string): Promise<void> {
+    const query = "UPDATE public.advogados SET especialidade = $2 WHERE email = $1 "
+    const result = await this.pool.query(query, [email, especialidade])
   }
+
 
   //METODO QUE ATUALIZA O SEU EMAIL
-  public async atualizarEmail(id: number, email: string): Promise<void> {
-    const query = "UPDATE public.advogados SET email = $2 WHERE id = $1"
-    const result = await this.pool.query(query, [id, email])
+  public async atualizarEmail(email: string, email2: string): Promise<void> {
+    const query = "UPDATE public.advogados SET email = $2 WHERE email = $1"
+    const result = await this.pool.query(query, [email, email2])
   }
+
 
   //METODO QUE ATUALIZA O SEU TELEFONE
-  public async atualizarTelefone(id: number, telefone: number): Promise<void> {
-    const query = "UPDATE public.advogados SET telefone = $2 WHERE id = $1"
-    const result = await this.pool.query(query, [id, telefone])
+  public async atualizarTelefone(email: string, telefone: number): Promise<void> {
+    const query = "UPDATE public.advogados SET telefone = $2 WHERE email = $1"
+    const result = await this.pool.query(query, [email, telefone])
   }
 
+
   //METODO QUE ATUALIZA A SUA SITUAÇÃO, (EX: ATIVO OU INATIVO)
-  public async atualizarSituacao(id: number, situacao: string): Promise<void> {
-    const query = "UPDATE public.advogados SET situacao = $2 WHERE id = $1"
-    const result = await this.pool.query(query, [id, situacao])
+  public async atualizarSituacao(email: string, situacao: string): Promise<void> {
+    const query = "UPDATE public.advogados SET situacao = $2 WHERE email = $1"
+    const result = await this.pool.query(query, [email, situacao])
   }
 }

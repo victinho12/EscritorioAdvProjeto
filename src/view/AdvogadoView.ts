@@ -14,18 +14,17 @@ export class AdvogadoView {
     this.prompt = promptSync();
     this.Advogado = new AdvogadoService();
   }
+
+
   // METODO QUE LISTA TODOS OS ADVOGAODS
-  public async listar_advogados(){
+  public async listar_advogados() {
     console.table(await this.Advogado.listarAdvogados())
   }
-  // METOD QUE VERIFICA SE O EMAIL DO CLIENTE ESTÁ CORRETO
-  public verificarEmail(email:string): void {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailRegex.test(email)) {
-      console.log("Email está invalido tente novamente");
-      this.exibirMenu();
-    }
-  }
+
+
+  
+
+
   // METODO QUE EXIBE O MENU PARA O USUARIO
   public async exibirMenu(): Promise<void> {
     console.log("======================================");
@@ -64,8 +63,8 @@ export class AdvogadoView {
       case "3"://PESQUISA UM ADIVOGADO
         await this.listar_advogados()
         console.log("")
-        let IdAdvogado = this.prompt("Digite o Id do Advogado");
-        console.table(await this.Advogado.buscarAdv(IdAdvogado));
+        let email_advogado = this.prompt("Digite o email do Advogado: ");
+        console.table(await this.Advogado.buscarAdv(email_advogado));
         this.exibirMenu()
         break;
 
@@ -73,8 +72,8 @@ export class AdvogadoView {
       case "4"://DELETA UM ADVOGADO
         await this.listar_advogados()
         console.log("")
-        let idDeletar = this.prompt("Digite o id do adv que deseja deletar: ")
-        await this.Advogado.deletarAdv(idDeletar)
+        let email_Deletar = this.prompt("Digite o email do adv que deseja deletar: ")
+        await this.Advogado.deletarAdv(email_Deletar)
         this.exibirMenu()
         break;
 
@@ -94,13 +93,13 @@ export class AdvogadoView {
         let perguntaAtualizarAdv = this.prompt("Digite oq vc deseja mudar de um advogado: ")
         switch (perguntaAtualizarAdv) {
 
-         
+
           case "1":// MUDA O NOME DO ADVOGADO
             await this.listar_advogados()
             console.log("")
-            let perguntaIdMudar1 = this.prompt("Digite o id do advogado: ")
+            let pergunta_email_Mudar1 = this.prompt("Digite o email do advogado: ")
             let perguntaMudarNome = this.prompt("Digite o nome que quer botar: ")
-            await this.Advogado.atualizarNomeAdv(perguntaIdMudar1, perguntaMudarNome)
+            await this.Advogado.atualizarNomeAdv(pergunta_email_Mudar1, perguntaMudarNome)
             this.exibirMenu()
             break;
 
@@ -108,9 +107,9 @@ export class AdvogadoView {
           case "2":// MUDA A SUA ESPECIALIDADE
             await this.listar_advogados()
             console.log("")
-            let perguntaIdMudarEspecialida = this.prompt("Digite o id do advogado: ")
+            let pergunta_email_MudarEspecialida = this.prompt("Digite o email do advogado: ")
             let perguntaMudarEspecialidade = this.prompt("Digite a especialidade que quer botar: ")
-            await this.Advogado.atualizarEspecialidadeAdv(perguntaIdMudarEspecialida, perguntaMudarEspecialidade)
+            await this.Advogado.atualizarEspecialidadeAdv(pergunta_email_MudarEspecialida, perguntaMudarEspecialidade)
             this.exibirMenu()
             break;
 
@@ -118,18 +117,18 @@ export class AdvogadoView {
           case "3":// MUDA O SEU EMAIL
             await this.listar_advogados()
             console.log("")
-            let perguntaIdMudar3 = this.prompt("Digite o id do advogado: ")
+            let pergunta_email_Mudar3 = this.prompt("Digite o email do advogado: ")
             let perguntaMudarEmail = this.prompt("Digite o email que você quer botar: ")
-            await this.Advogado.atualizarEmailAdv(perguntaIdMudar3, perguntaMudarEmail)
+            await this.Advogado.atualizarEmailAdv(pergunta_email_Mudar3, perguntaMudarEmail)
             this.exibirMenu()
             break;
 
           case "4":// MUDA O SEU TELEFONE
-          await this.listar_advogados()
-          console.log("")
-            let perguntaIdMudar4 = this.prompt("Digite o id do advogado: ")
+            await this.listar_advogados()
+            console.log("")
+            let pergunta_email_Mudar4 = this.prompt("Digite o email do advogado: ")
             let perguntaMudarTelefone = this.prompt("Digite o telefone que quer botar: ")
-            await this.Advogado.atualizarTelefoneAdv(perguntaIdMudar4, perguntaMudarTelefone)
+            await this.Advogado.atualizarTelefoneAdv(pergunta_email_Mudar4, perguntaMudarTelefone)
             this.exibirMenu()
             break;
 
@@ -137,22 +136,22 @@ export class AdvogadoView {
           case "5":// MUDA A SUA SITUAÇÃO
             await this.listar_advogados()
             console.log("")
-            let perguntaIdMudar5 = this.prompt("Digite o id do advogado: ")
+            let pergunta_email_Mudar5 = this.prompt("Digite o email do advogado: ")
             let perguntaMudarSituacao = this.prompt("Digite a situacão do advogado que quer botar: ")
-            await this.Advogado.atualizarSituacao(perguntaIdMudar5,perguntaMudarSituacao)
+            await this.Advogado.atualizarSituacao(pergunta_email_Mudar5, perguntaMudarSituacao)
             break;
-            default:
-                console.log("Não temos essa opção!!")
-                this.exibirMenu()
+          default:
+            console.log("Não temos essa opção!!")
+            this.exibirMenu()
           case "6"://VOLTA PARA O MENU
             this.exibirMenu()
         }
         break;
-        case "6"://SAI DO SISTEMA
-          process.exit()
-          default:
-                console.log("Não temos essa opção!!")
-                this.exibirMenu()
+      case "6"://SAI DO SISTEMA
+        process.exit()
+      default:
+        console.log("Não temos essa opção!!")
+        this.exibirMenu()
     }
   }
 }

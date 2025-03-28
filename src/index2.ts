@@ -4,16 +4,16 @@ import { PagamentosView } from "./view/PagamentosView";
 import { ConsultasView } from "./view/ConsultasView";
 
 
-const clienteview = new ClienteView
-clienteview.exibirMenu();
+// const clienteview = new ClienteView
+// clienteview.exibirMenu();
 
 
 // const advogadoView = new AdvogadoView
 // advogadoView.exibirMenu();
 
 
-// const consultasView = new ConsultasView
-// consultasView.exibirMenu()
+const consultasView = new ConsultasView
+consultasView.exibirMenu()
 
 // const pagamentosView = new PagamentosView
 // pagamentosView.exibirMenu()

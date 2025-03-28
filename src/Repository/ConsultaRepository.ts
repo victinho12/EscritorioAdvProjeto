@@ -34,7 +34,7 @@ export class ConsultasRepository {
 
 
   //METODOS USADOS PARA INSERIR CONSULTAS NO SISTEMA
-  public async inserirConsulta(cpf_clientes: number, id_advogado: Advogados, data_agendada: Date, horario: Date) {
+  public async inserirConsulta(cpf_clientes: string, id_advogado: Advogados, data_agendada: Date, horario: Date) {
     const query = "insert into public.consultas (cpf_clientes,id_advogado,data_agendada,horario) values ($1, $2, $3, $4)returning*"
     const result = [cpf_clientes, id_advogado, data_agendada, horario];
     const { rows } = await this.pool.query(query, result);
@@ -50,14 +50,14 @@ export class ConsultasRepository {
 
   //METODO USADO PARA BUSCAR CONSULTAS PARA RELATORIOS DE ADVOGADOS
   public async buscar_consulta_para_Advogado(id_advogado: number): Promise<Consultas[]> {
-    const query = "SELECT id_consulta ,cpf_clientes, id_advogado, data_agendada ,horario from public.consultas where id_advogado = $1"
+    const query = "SELECT id ,cpf_clientes, id_advogado, data_agendada ,horario from public.consultas where id_advogado = $1"
     const resultado = await this.pool.query(query, [id_advogado])
 
     const buscarConsultaAdv: Consultas[] = []
-
     for (let row of resultado.rows) {
+      console.log(row)
       let Consulta = new Consultas(
-        row.id_consulta,
+        row.id,
         row.cpf_clientes,
         row.id_advogado,
         row.data_agendada,
@@ -70,15 +70,36 @@ export class ConsultasRepository {
 
 
   //METODO USADO PARA BUSCAR CONSULTAS PARA RELATORIOS DE ADVOGADOS
-  public async buscar_consulta_Cliente(cpf: number): Promise<Consultas[]> {
-    const query = "SELECT id , data_agendada, cpf_clientes ,horario from public.consultas where cpf_clientes = $1"
+  public async buscar_consulta_Cliente(cpf: string): Promise<Consultas[]> {
+    const query = "SELECT id, data_agendada, cpf_clientes, id_advogado ,horario from public.consultas where cpf_clientes = $1"
     const resultado = await this.pool.query(query, [cpf])
 
     const buscarConsultaCliente: Consultas[] = []
 
     for (let row of resultado.rows) {
       let Consulta = new Consultas(
-        row.id_consulta,
+        row.id,
+        row.cpf_clientes,
+        row.id_advogado,
+        row.data_agendada,
+        row.horario,
+      );
+      buscarConsultaCliente.push(Consulta);
+    }
+    return buscarConsultaCliente
+  }
+
+
+  //METODO USADO PARA BUSCAR CONSULTAS
+  public async buscar_consulta(id: number): Promise<Consultas[]> {
+    const query = "SELECT id, data_agendada, cpf_clientes, id_advogado ,horario from public.consultas where id = $1"
+    const resultado = await this.pool.query(query, [id])
+
+    const buscarConsultaCliente: Consultas[] = []
+
+    for (let row of resultado.rows) {
+      let Consulta = new Consultas(
+        row.id,
         row.cpf_clientes,
         row.id_advogado,
         row.data_agendada,

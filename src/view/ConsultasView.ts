@@ -1,7 +1,7 @@
 //IMPORTANDO DADOS
 import { ClienteService } from "../Service/ClienteService";
 import { AdvogadoService } from "../Service/AdvogadoService";
-import { ConsultasService } from "../Service/consultasService";
+import { ConsultasService } from "../Service/ConsultasService";
 import promptSync from "prompt-sync";
 
 //CLASSE CONSULTAS VIEW
@@ -80,6 +80,7 @@ export class ConsultasView {
 
 
             case "3":// BUSCAR CONSULTA PARA O ADV
+                await this.listar_advogados()
                 let pergunta_consulta_advogado = this.prompt("Digite o id do advogado: ")
                 console.table(await this.consultas.buscar_consultas__Adv(pergunta_consulta_advogado))
                 this.exibirMenu()
@@ -87,6 +88,7 @@ export class ConsultasView {
 
 
             case "4":// BUSCA CONSULTA PARA O CLIENTE
+                await this.listar_consultas()
                 let pergunta_consultar_cliente = this.prompt("Digite o cpf do cliente: ")
                 console.table(await this.consultas.buscar_consultas_Cliente(pergunta_consultar_cliente))
                 this.exibirMenu();
@@ -117,7 +119,7 @@ export class ConsultasView {
                         console.log("Tabela de consultas")
                         console.table(await this.consultas.listarTodasConsultas())
                         console.log("")
-                        console.log("Tabela de advogados")
+                        console.log("Tabela de clientes")
                         console.table(await this.clientes.listarClientes())
                         let pergunta_mudar_cpf = this.prompt("Digite qual o cpf que deseja mudar: ")
                         let pergunta_botar_cpf = this.prompt("Digite qual cpf deseja botar: ")
