@@ -31,8 +31,32 @@ export class AdvogadoRepository {
   }
 
 
+  
+
+//METODO PARA BUSCAR UM ADVOGADO NA TABELA DO BANCO DE DADOS
+public async buscarAdv_Por_Id(id: number): Promise<Advogados[]> {
+  const query = "select * from public.advogados where id = $1";
+  const result = await this.pool.query(query, [id]);
+
+  const listaAdv: Advogados[] = [];
+
+  for (let row of result.rows) {
+    let advogado = new Advogados(
+      row.id,
+      row.nome,
+      row.especialidade,
+      row.email,
+      row.telefone,
+      row.situacao
+    );
+    listaAdv.push(advogado);
+  }
+  return listaAdv;
+}
+
+
   //METODO PARA BUSCAR UM ADVOGADO NA TABELA DO BANCO DE DADOS
-  public async buscarAdvPorId(email: string): Promise<Advogados[]> {
+  public async buscarAdv_Por_cpf(email: string): Promise<Advogados[]> {
     const query = "select * from public.advogados where email = $1";
     const result = await this.pool.query(query, [email]);
 

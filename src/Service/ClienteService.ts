@@ -25,11 +25,11 @@ export class ClienteService {
   public async buscarClientesPorCpf(cpf: string): Promise<Cliente[]> {
     let lista: Cliente[] = [];
     lista = await this.repo.BuscarCLientePorCpf(cpf);
-
     if (lista.length === 0) {
       throw new Error("Cpf invalido");
+    }else{
+      return lista
     }
-    return lista;
   }
 
 

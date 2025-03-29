@@ -4,7 +4,7 @@ export class Validacoes{
     static arrumar_texto(texto:string):string{
         return texto
         .trim()
-        .toLowerCase()
+        .toLowerCase() // victor, eduardo //
         .split(" ")
         .map(texto => texto.charAt(0).toLocaleUpperCase() + texto.slice(1))
         .join(" ")

@@ -34,7 +34,7 @@ export class ConsultasRepository {
 
 
   //METODOS USADOS PARA INSERIR CONSULTAS NO SISTEMA
-  public async inserirConsulta(cpf_clientes: string, id_advogado: Advogados, data_agendada: Date, horario: Date) {
+  public async inserirConsulta(cpf_clientes: string, id_advogado: number, data_agendada: Date, horario: Date) {
     const query = "insert into public.consultas (cpf_clientes,id_advogado,data_agendada,horario) values ($1, $2, $3, $4)returning*"
     const result = [cpf_clientes, id_advogado, data_agendada, horario];
     const { rows } = await this.pool.query(query, result);
@@ -55,7 +55,6 @@ export class ConsultasRepository {
 
     const buscarConsultaAdv: Consultas[] = []
     for (let row of resultado.rows) {
-      console.log(row)
       let Consulta = new Consultas(
         row.id,
         row.cpf_clientes,

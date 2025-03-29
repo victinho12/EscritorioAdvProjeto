@@ -64,7 +64,7 @@ export class AdvogadoView {
         await this.listar_advogados()
         console.log("")
         let email_advogado = this.prompt("Digite o email do Advogado: ");
-        console.table(await this.Advogado.buscarAdv(email_advogado));
+        console.table(await this.Advogado.buscar_adv_email(email_advogado));
         this.exibirMenu()
         break;
 

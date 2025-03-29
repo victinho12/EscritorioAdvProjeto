@@ -25,4 +25,7 @@ export class Advogados {
     this.Telefone = telefone;
     this.situacao = situacao
   }
+  public getId(): number {
+    return this.id
+  }
 }

@@ -20,11 +20,22 @@ export class AdvogadoService {
     return await this.repo.listaAdvogados();
   }
 
+  //METODO QUE BUSCA ADVOGADOS
+  public async buscar_adv_id(id: number): Promise<Advogados[]> {
+    let lista : Advogados[] = [] 
+    lista = await this.repo.buscarAdv_Por_Id(id)
+    if (lista.length === 0 ){
+      throw new Error ("Esse advogado não existe!!")
+    }else{
+      return lista
+    }
+  }
+
 
   //METODO QUE BUSCA ADVOGADOS
-  public async buscarAdv(email: string): Promise<Advogados[]> {
+  public async buscar_adv_email(email: string): Promise<Advogados[]> {
     let lista : Advogados[] = [] 
-    lista = await this.repo.buscarAdvPorId(email)
+    lista = await this.repo.buscarAdv_Por_cpf(email)
 
     if (lista.length === 0 ){
       throw new error ("Esse advogado não existe!!")
@@ -47,7 +58,7 @@ export class AdvogadoService {
 
   //METODO QUE DELETA ADVOGADOS DO SISTEMA
   public async deletarAdv(email: string): Promise<void> {
-    let advogado = this.buscarAdv(email)
+    let advogado = this.repo.buscarAdv_Por_cpf(email)
 
     if(!advogado){
       throw new error ("Esse advogado não existe!!")
@@ -58,7 +69,7 @@ export class AdvogadoService {
 
   //METODO QUE ATUALIZA O NOME DO ADVOGADO
   public async atualizarNomeAdv(email: string, nome: string): Promise<void> {
-    let advogado = this.buscarAdv(email)
+    let advogado = this.buscar_adv_email(email)
     if(!advogado){
       throw new error ("Esse advogado não existe")
     }
@@ -69,7 +80,7 @@ export class AdvogadoService {
 
   //METODO QUE ATUALIZA A SUA ESPECIALIDADE
   public async atualizarEspecialidadeAdv(email: string, especialidade: string): Promise<void> {
-    let advogado = this.buscarAdv(email)
+    let advogado = this.buscar_adv_email(email)
 
     if(!advogado){
       throw new error ("Esse advogado não existe!!")
@@ -80,7 +91,7 @@ export class AdvogadoService {
 
   //METODO QUE ATUALIZA O SEU EMAIL
   public async atualizarEmailAdv(email: string, email2: string): Promise<void> {
-    let advogado = this.buscarAdv(email)
+    let advogado = this.buscar_adv_email(email)
 
     if(!Validacoes.validar_email(email || email2)){
       throw new error ("Esse advogado não existe!!")
@@ -91,7 +102,7 @@ export class AdvogadoService {
 
   //METODO QUE ATUALIZA O SEU TELEFONE
   public async atualizarTelefoneAdv(email: string, telefone: number): Promise<void> {
-    let advogado = this.buscarAdv(email)
+    let advogado = this.buscar_adv_email(email)
 
     if(!advogado){
       throw new error ("Esse advogado não existe!!")
@@ -102,7 +113,7 @@ export class AdvogadoService {
 
   //METODO QUE ATUALIZA A SUA SITUAÇÃO (EX: ATIVO, INATIVO)
   public async atualizarSituacao(email: string, situacao: string): Promise<void> {
-    let advogado = this.buscarAdv(email)
+    let advogado = this.buscar_adv_email(email)
 
     if(!advogado){
       throw new error ("Esse advogado não existe!!")
