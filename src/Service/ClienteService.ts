@@ -3,14 +3,17 @@ import { error } from "console";
 import { Cliente } from "../Entity/Clientes";
 import { ClienteRepository } from "../Repository/ClienteRepository";
 import { Validacoes } from "../Util/Verificacoes";
+import { ConsultasService } from "./ConsultasService";
 
 //CLASSE CLIETNE SERVICE
 export class ClienteService {
+  private servi_consulta: ConsultasService
   private repo: ClienteRepository;
 
 
   //CONSTRUTOR DA CLASSE
   constructor() {
+    this.servi_consulta = new ConsultasService()
     this.repo = new ClienteRepository();
   }
 
@@ -27,7 +30,7 @@ export class ClienteService {
     lista = await this.repo.BuscarCLientePorCpf(cpf);
     if (lista.length === 0) {
       throw new Error("Cpf invalido");
-    }else{
+    } else {
       return lista
     }
   }
@@ -40,9 +43,36 @@ export class ClienteService {
     datanascimento: string,
     observacoes: string
   ) {
+    let clientes = await this.buscarClientesPorCpf(cpf)
+    if (clientes.length == clientes.length) {
+      throw new Error("Esse cliente já existe!!");
+    }
     if (!Validacoes.validar_CPF(cpf)) {
       throw new Error("CPF inválido");
     }
+
+
+    // VALIDAR DATA DE NASCIMENTO
+    if (!/^\d{2}\/\d{2}\/\d{4}$/.test(datanascimento)) {
+      console.log('Data de nascimento inválida. Use o formato DD/MM/AAAA.');
+
+    }
+    const [dia, mes, ano] = datanascimento.split('/');
+    const nascimentoFormatado = `${ano}-${mes}-${dia}`;
+
+    const nascimento = new Date(nascimentoFormatado);
+
+    if (isNaN(nascimento.getTime())) {
+      console.log('Data de nascimento inválida. Certifique-se de que a data inserida é válida.');
+
+    }
+
+    const hoje = new Date();
+    if (nascimento > hoje) {
+      console.log('A data de nascimento não pode ser maior que a data de hoje.');
+
+    }
+
     return await this.repo.inserirCliente(
       cpf,
       Validacoes.arrumar_texto(nome),
@@ -53,47 +83,87 @@ export class ClienteService {
 
 
   //METODO QUE DELETA CLIENTES DO SISTEMA
-  public async deletarCliente(cpf: string): Promise<Cliente[]> {
-    let cliente = this.buscarClientesPorCpf(cpf)
+  public async deletarCliente(cpf: string) {
+    let cliente = await this.buscarClientesPorCpf(cpf)
+    let cliente_consultas = await this.servi_consulta.buscar_consultas_Cliente(cpf)
     if (!cliente) {
       throw new Error("Cliente não encontrado");
     }
-    let lista: Cliente[] = await this.repo.deletarCliente(cpf);
-    return lista;
+    if (cliente.length === cliente_consultas.length) {
+      throw new Error("Esse cliente não pode ser deletado pois tem consultas agendadas!!")
+    }else{
+
+      let lista: Cliente[] = await this.repo.deletarCliente(cpf);
+      return lista;
+    }
+
 
   }
-
-
+  
+  
   //METODO QUE MUDA O CPF DO CLIENTE 
   public async mudarCpfCliente(cpf: string, cpf2: string) {
     let cliente = this.buscarClientesPorCpf(cpf)
-    if (!cliente){
-      throw new error ("Cliente não encontrado!!")
+    if (!cliente) {
+      throw new error("Cliente não encontrado!!")
     }
-    if(!Validacoes.validar_CPF(cpf2)){
-      throw new error ("Cliente não pode ser adicionado pois não existe")
+    if (!Validacoes.validar_CPF(cpf2)) {
+      throw new error("Cliente não pode ser adicionado pois não existe")
     }
     await this.repo.mudarCpfCliente(cpf, cpf2)
-    
+
   }
 
 
   //METOD QUE MUDA O NOME DO CLIENTE
   public async mudarNomeCliente(cpf: string, nome: string): Promise<void> {
-    await this.repo.mudarNomeCliente(cpf, nome)
+    let cliente = this.buscarClientesPorCpf(cpf)
+    if (!cliente) {
+      throw new error("Cliente não encontrado!!")
+    }
+    await this.repo.mudarNomeCliente(cpf, Validacoes.arrumar_texto(nome))
   }
 
 
   //METODO QUE MUDAD A SUA DATA DE NASCIMENTO
   public async mudarDataNascimento(cpf: string, datanascimento: string): Promise<void> {
+    let cliente = this.buscarClientesPorCpf(cpf)
+    if (!cliente) {
+      throw new error("Cliente não encontrado!!")
+    }
+    // VALIDAR DATA DE NASCIMENTO
+    if (!/^\d{2}\/\d{2}\/\d{4}$/.test(datanascimento)) {
+      console.log('Data de nascimento inválida. Use o formato DD/MM/AAAA.');
+
+    }
+    const [dia, mes, ano] = datanascimento.split('/');
+    const nascimentoFormatado = `${ano}-${mes}-${dia}`;
+
+    const nascimento = new Date(nascimentoFormatado);
+
+    if (isNaN(nascimento.getTime())) {
+      console.log('Data de nascimento inválida. Certifique-se de que a data inserida é válida.');
+    }
+
+    const hoje = new Date();
+    if (nascimento > hoje) {
+      console.log('A data de nascimento não pode ser maior que a data de hoje.');
+
+    }
     await this.repo.mudarDataNascimento(cpf, datanascimento)
   }
 
 
-  
+
   //METODO QUE MUDA A SUA OBSERVAÇÕES (EX; EDUARDO MATOU ALGUÉM)
   public async mudarObservacoes(cpf: string, observacoes: string): Promise<void> {
-    await this.repo.mudarObservacoes(cpf, observacoes)
+    let cliente = this.buscarClientesPorCpf(cpf)
+    if (!cliente) {
+      throw new error("Cliente não encontrado!!")
+    }
+    await this.repo.mudarObservacoes(cpf, Validacoes.arrumar_texto(observacoes))
   }
+
+
 
 }

@@ -8,15 +8,14 @@ import { Validacoes } from "../Util/Verificacoes";
 
 //CLASSE CONSULTAS SERVICE
 export class ConsultasService {
-    private ent : Advogados
+    private ent: Advogados
     private servi_adv: AdvogadoService
     private servi_cliente: ClienteService
     private repo: ConsultasRepository
 
-    
+
     //CONSTRUTOR DA CLASSE
     constructor() {
-        this.ent = new Advogados(0, "", "", "", 0, "")
         this.servi_adv = new AdvogadoService()
         this.servi_cliente = new ClienteService()
         this.repo = new ConsultasRepository()
@@ -34,25 +33,45 @@ export class ConsultasService {
         let consulta: Consultas[] = []
         consulta = await this.repo.buscar_consulta(id)
         if (consulta.length === 0) {
-            throw new Error("Consulta não encontrado")
-        } else {
-            return consulta
+            throw new Error("Consulta não encontrada")
         }
+        return consulta;
     }
 
 
+
     // METODO INSERE CONSULTAS
-    public async inserirConsulta(cpf_clientes: string, id_advogado: number, dataAgendada: Date, horario: Date) {
-        let lista : Advogados[] = [] 
+    public async inserirConsulta(cpf_clientes: string, id_advogado: number, dataAgendada: string, horario: Date) {
+        let lista: Advogados[] = []
         lista = await this.servi_adv.buscar_adv_id(id_advogado)
-        if (lista.length === 0 ){
-        throw new Error ("Esse advogado não existe!!")
+
+        if (lista.length === 0) {
+            throw new Error("Esse advogado não existe!!")
         }
-        if (!Validacoes.validar_CPF(cpf_clientes)) {
-            throw new Error("Cpf invalido")
-            
+
+
+        if (!/^\d{2}\/\d{2}\/\d{4}$/.test(dataAgendada)) {
+            console.log('Data de consulta está inválida. Use o formato DD/MM/AAAA.');
+            return
         }
-        
+        const [dia, mes, ano] = dataAgendada.split('/');
+        const nascimentoFormatado = `${ano}-${mes}-${dia}`;
+
+        const nascimento = new Date(nascimentoFormatado);
+
+        if (isNaN(nascimento.getTime())) {
+            console.log('Data de consulta inválida. Certifique-se de que a data inserida é válida.');
+            return
+        }
+
+        const hoje = new Date();
+        if (nascimento < hoje) {
+            console.log('A data de consulta não pode ser menor que a data de hoje.');
+            return
+        }
+
+
+
         return await this.repo.inserirConsulta(cpf_clientes, id_advogado, dataAgendada, horario)
     }
 
@@ -64,13 +83,14 @@ export class ConsultasService {
         if (adv_consultas.length === 0) {
             throw new Error("Advogado não encontrada")
         }
-        
+
         return await this.repo.buscar_consulta_para_Advogado(id_advogado)
     }
 
 
+
     // METODO QUE BUSCA AS CONSULTAS DOS ADVOGADOS PARA RELATÓRIO
-    public async buscar_consultas_Cliente(cpf: string): Promise<Consultas[]> {
+    public async buscar_consultas_Cliente(cpf: string) {
         let cliente_consultas: Consultas[] = []
         cliente_consultas = await this.repo.buscar_consulta_Cliente(cpf)
         if (cliente_consultas.length === 0) {
@@ -78,6 +98,7 @@ export class ConsultasService {
         }
         return await this.repo.buscar_consulta_Cliente(cpf)
     }
+
 
 
     // METODO QUE DELETA AS CONSULTAS
@@ -90,6 +111,7 @@ export class ConsultasService {
     }
 
 
+
     // MEDO QUE MUDA O CPF DO CLIENTE
     public async mudar_cpf_cliente(cpf: string, cpf2: string) {
         let clientes = this.servi_cliente.buscarClientesPorCpf(cpf)
@@ -99,9 +121,10 @@ export class ConsultasService {
         if (!Validacoes.validar_CPF(cpf)) {
             throw new Error("Cpf não existe")
         }
-        
+
         await this.repo.mudar_cpf_cliente(cpf, cpf2)
     }
+
 
 
     // METODO QUE MUDA O ID DO ADVOGADO
@@ -119,14 +142,42 @@ export class ConsultasService {
 
 
     // METODO QUE MUDA A DATA
-    public async mudar_data(id: number, data_agendada: Date) {
-        await this.mudar_data(id, data_agendada)
+    public async mudar_data(id: number, data_agendada: string) {
+        let consulta = this.buscar_consultas(id)
+        if (!consulta) {
+            throw new Error("Id não encontrado!!")
+        }
+        if (!/^\d{2}\/\d{2}\/\d{4}$/.test(data_agendada)) {
+            console.log('Data de consulta está inválida. Use o formato DD/MM/AAAA.');
+            return
+        }
+        const [dia, mes, ano] = data_agendada.split('/');
+        const nascimentoFormatado = `${ano}-${mes}-${dia}`;
+
+        const nascimento = new Date(nascimentoFormatado);
+
+        if (isNaN(nascimento.getTime())) {
+            console.log('Data de consulta inválida. Certifique-se de que a data inserida é válida.');
+            return
+        }
+
+        const hoje = new Date();
+        if (nascimento < hoje) {
+            console.log('A data de consulta não pode ser menor que a data de hoje.');
+            return
+        }
+        await this.repo.mudar_data(id, data_agendada)
     }
+
 
 
     // METODO USADO PARA MUDAR O HORARIO
-    public async mudar_horario(id: number, horario: Date) {
+    public async mudar_horario(id: number, horario: string) {
         await this.repo.mudar_horario(id, horario)
     }
 
+    public validar_data(data: string) {
+
+
+    }
 }

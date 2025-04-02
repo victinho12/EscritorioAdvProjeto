@@ -37,13 +37,14 @@ export class ClienteRepository {
     const result = await this.pool.query(query, [cpf]);
 
     const buscarClientes: Cliente[] = [];
-
+    
     for (let row of result.rows) {
+      console.log(row)
       let cliente = new Cliente(
         row.cpf,
         row.nome,
         row.datanascimento,
-        row.observacoes_cliente
+        row.observacoes
       );
       buscarClientes.push(cliente);
     }
@@ -66,7 +67,7 @@ export class ClienteRepository {
       rows[0].cpf,
       rows[0].nome,
       rows[0].datanascimento,
-      rows[0].observacoes_cliente
+      rows[0].observacoes
     );
   }
 

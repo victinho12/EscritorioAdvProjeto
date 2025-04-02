@@ -34,7 +34,7 @@ export class ConsultasRepository {
 
 
   //METODOS USADOS PARA INSERIR CONSULTAS NO SISTEMA
-  public async inserirConsulta(cpf_clientes: string, id_advogado: number, data_agendada: Date, horario: Date) {
+  public async inserirConsulta(cpf_clientes: string, id_advogado: number, data_agendada: string, horario: Date) {
     const query = "insert into public.consultas (cpf_clientes,id_advogado,data_agendada,horario) values ($1, $2, $3, $4)returning*"
     const result = [cpf_clientes, id_advogado, data_agendada, horario];
     const { rows } = await this.pool.query(query, result);
@@ -133,13 +133,13 @@ export class ConsultasRepository {
 
 
   // METODO QUE MUDA A DATA DA CONSULTA
-  public async mudar_data(id: number, data_agendada: Date) {
+  public async mudar_data(id: number, data_agendada: string) {
     const query = "update public.consultas set data_agendada = $2 where id = $1 "
     const result = await this.pool.query(query, [id, data_agendada])
   }
 
   //METODO USADO PARA MUDAR O HORARIO DA CONSULTA
-  public async mudar_horario(id: number, horario: Date) {
+  public async mudar_horario(id: number, horario: string) {
     const query = "UPDATE public.consultas SET horario = $2 WHERE id = $1 "
     const result = await this.pool.query(query, [id, horario])
     return result.rows
