@@ -65,9 +65,9 @@ export class PagamentosRepository {
     return buscar_pagamento
   }
 
-  public async deletar_pagamento(id:number){
-    const query = "delete from public.pagamentos where pagamentos.id = $1"
-    const result = await this.pool.query(query,[id])
+  public async deletar_pagamento(id_consulta:number){
+    const query = "delete from public.pagamentos where pagamentos.id_consulta = $1"
+    const result = await this.pool.query(query,[id_consulta])
     return  result.rows
   }
 

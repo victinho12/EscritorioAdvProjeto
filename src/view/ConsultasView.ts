@@ -98,7 +98,7 @@ export class ConsultasView {
                 console.table(await this.consultas.listarTodasConsultas())
                 let pergunta_consulta_deletar = this.prompt("Digite o id da consulta que quer deletar: ")
                 await this.consultas.deletar_consulta(pergunta_consulta_deletar)
-                this.exibirMenu();
+                await this.exibirMenu();
                 break;
 
             case "6":// MENU DE ATUALIZAÇÃO
@@ -118,10 +118,10 @@ export class ConsultasView {
                         console.log("")
                         console.log("Tabela de consultas")
                         console.table(await this.consultas.listarTodasConsultas())
+                        let pergunta_mudar_cpf = this.prompt("Digite qual o cpf que deseja mudar: ")
                         console.log("")
                         console.log("Tabela de clientes")
                         console.table(await this.clientes.listarClientes())
-                        let pergunta_mudar_cpf = this.prompt("Digite qual o cpf que deseja mudar: ")
                         let pergunta_botar_cpf = this.prompt("Digite qual cpf deseja botar: ")
                         await this.consultas.mudar_cpf_cliente(pergunta_mudar_cpf, pergunta_botar_cpf)
                         this.exibirMenu();

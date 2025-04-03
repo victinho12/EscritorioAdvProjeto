@@ -1,16 +1,16 @@
 import { PagamentosRepository } from "../Repository/PagamentosRepository";
 import { ConsultasRepository } from "../Repository/ConsultaRepository";
-import { Advogados } from "../Entity/Advogado";
-import { Cliente } from "../Entity/Clientes";
 import { Validacoes } from "../Util/Verificacoes";
 import { Pagamentos } from "../Entity/Pagamentos";
 import { Consultas } from "../Entity/Consultas";
-
+import { ConsultasView } from "../view/ConsultasView";
 export class PagamentosService {
+    private servi_consulta: ConsultasView
     private repo: PagamentosRepository
     private repo_consulta: ConsultasRepository
     //CONSTRUTOR DA CLASSE
     constructor() {
+        this.servi_consulta = new ConsultasView()
         this.repo_consulta = new ConsultasRepository()
         this.repo = new PagamentosRepository()
     }
@@ -24,12 +24,15 @@ export class PagamentosService {
     public async adicionar_pagamentos(id_consulta: number, valor: number, data_pagamento: Date, metodo_pagamento: string) {
         let id_consultas: Consultas[] = []
         id_consultas = await this.repo_consulta.buscar_consulta(id_consulta)
-        if (valor <= 0) {
-            throw new Error("Valor inválido")
-        }
+        
         if (id_consultas.length === 0) {
             throw new Error("Essa consulta não existe!!")
         }
+        
+        if (valor <= 0) {
+            throw new Error("Valor inválido")
+        }
+      
 
         return await this.repo.adicionar_pagamento(id_consulta, valor, data_pagamento, (Validacoes.arrumar_texto(metodo_pagamento)))
     }
@@ -37,20 +40,22 @@ export class PagamentosService {
 
     public async buscar_pagamentos(id_consulta: number): Promise<Pagamentos[]> {
         let pagamentos: Pagamentos[] = []
+        pagamentos = await this.repo.pesquisar_pagamento(id_consulta)
         if (pagamentos.length === 0) {
-            throw new Error("Id inválido")
+            throw new Error("Id inválido ou ainda não existe!!")
+            
         }
         return this.repo.pesquisar_pagamento(id_consulta)
     }
 
 
-    public async deletar_pagamentos(id: number) {
+    public async deletar_pagamentos(id_consulta: number) {
         let pagamentos: Pagamentos[] = []
-        pagamentos = await this.repo.pesquisar_pagamento(id)
+        pagamentos = await this.repo.pesquisar_pagamento(id_consulta)
         if (pagamentos.length === 0) {
             throw new Error("Esse pagamento não existe!!")
         }
-        await this.repo.deletar_pagamento(id)
+        await this.repo.deletar_pagamento(id_consulta)
     }
 
 

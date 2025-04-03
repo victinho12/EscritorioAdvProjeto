@@ -1,23 +1,20 @@
 //IMPORTANDO DADOS
 import { Advogados } from "../Entity/Advogado";
 import { ConsultasRepository } from "../Repository/ConsultaRepository";
-import { ClienteService } from "./ClienteService";
+
 import { Consultas } from "../Entity/Consultas";
 import { AdvogadoService } from "./AdvogadoService";
 import { Validacoes } from "../Util/Verificacoes";
 
 //CLASSE CONSULTAS SERVICE
 export class ConsultasService {
-    private ent: Advogados
     private servi_adv: AdvogadoService
-    private servi_cliente: ClienteService
     private repo: ConsultasRepository
 
 
     //CONSTRUTOR DA CLASSE
     constructor() {
         this.servi_adv = new AdvogadoService()
-        this.servi_cliente = new ClienteService()
         this.repo = new ConsultasRepository()
     }
 
@@ -114,11 +111,7 @@ export class ConsultasService {
 
     // MEDO QUE MUDA O CPF DO CLIENTE
     public async mudar_cpf_cliente(cpf: string, cpf2: string) {
-        let clientes = this.servi_cliente.buscarClientesPorCpf(cpf)
-        if (!clientes) {
-            throw new Error("Cliente não encontrado")
-        }
-        if (!Validacoes.validar_CPF(cpf)) {
+        if (!Validacoes.validar_CPF(cpf2)) {
             throw new Error("Cpf não existe")
         }
 

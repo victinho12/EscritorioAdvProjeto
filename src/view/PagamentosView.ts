@@ -2,7 +2,7 @@ import { PagamentosService } from "../Service/PagamentosService";
 //IMPORTANDO DADOS
 import { ClienteService } from "../Service/ClienteService";
 import { AdvogadoService } from "../Service/AdvogadoService";
-import { ConsultasService } from "../Service/consultasService";
+import { ConsultasService } from "../Service/ConsultasService";
 import promptSync from "prompt-sync";
 
 //CLASSE CONSULTAS VIEW
@@ -74,7 +74,7 @@ export class PagamentosView {
                 break;
 
             case "3": // BUSCAR PAGAMENTO
-                await this.listar_consultas()
+                await this.listar_todos_pagamentos()
                 let pergunta_id_consulta = this.prompt("Digite o id da consulta para achar um pagamento: ")
                 console.table(await this.pagamentos.buscar_pagamentos(pergunta_id_consulta))
                 this.exibirMenu()

@@ -84,7 +84,9 @@ export class ClienteService {
 
   //METODO QUE DELETA CLIENTES DO SISTEMA
   public async deletarCliente(cpf: string) {
-    let cliente = await this.buscarClientesPorCpf(cpf)
+    let cliente: Cliente[] = []
+    cliente = await this.buscarClientesPorCpf(cpf)
+    
     let cliente_consultas = await this.servi_consulta.buscar_consultas_Cliente(cpf)
     if (!cliente) {
       throw new Error("Cliente não encontrado");
