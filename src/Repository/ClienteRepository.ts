@@ -108,4 +108,16 @@ export class ClienteRepository {
     const result = await this.pool.query(query, [cpf, observacoes])
     return result.rows
   }
+
+  public async buscarConsultas(cpf: string): Promise<number[]> {
+    const query = "SELECT cpf_clientes FROM clientes INNER JOIN consultas ON clientes.cpf = consultas.cpf_clientes WHERE cpf_clientes = '003.534.900-00';"
+    const result = await this.pool.query(query, [cpf])
+
+    const listaClientes: number[] = []
+
+    for (let row of result.rows) {
+      listaClientes.push(row.quantiConsultas)
+    }
+    return listaClientes
+  }
 }

@@ -9,7 +9,7 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
-class MenuPrincipal {
+export class MenuPrincipal {
     private clienteView: ClienteView;
     private advogadoView: AdvogadoView;
     private consultasView: ConsultasView;

@@ -74,7 +74,11 @@ export class ConsultasView {
                 await this.listar_consultas()
                 let pergunta_data_para_agendar = this.prompt("Digite uma data para agendar: ")
                 let pergunta_horario_para_agendar = this.prompt("Digite um horario para agendar: ")
-                await this.consultas.inserirConsulta(perguntaCpfClient, perguntaIdAdvogado, pergunta_data_para_agendar, pergunta_horario_para_agendar)
+                try {
+                    await this.consultas.inserirConsulta(perguntaCpfClient, perguntaIdAdvogado, pergunta_data_para_agendar, pergunta_horario_para_agendar)
+                }catch (error) {
+                    console.log("Erro ao inserir consulta: ", error.message)
+                }
                 this.exibirMenu()
                 break;
 
@@ -82,7 +86,11 @@ export class ConsultasView {
             case "3":// BUSCAR CONSULTA PARA O ADV
                 await this.listar_advogados()
                 let pergunta_consulta_advogado = this.prompt("Digite o id do advogado: ")
-                console.table(await this.consultas.buscar_consultas__Adv(pergunta_consulta_advogado))
+                try {
+                    console.table(await this.consultas.buscar_consultas__Adv(pergunta_consulta_advogado))
+                }catch (error) {
+                    console.log("Erro ao buscar consulta: ", error.message)
+                }
                 this.exibirMenu()
                 break;
 
@@ -90,14 +98,22 @@ export class ConsultasView {
             case "4":// BUSCA CONSULTA PARA O CLIENTE
                 await this.listar_consultas()
                 let pergunta_consultar_cliente = this.prompt("Digite o cpf do cliente: ")
-                console.table(await this.consultas.buscar_consultas_Cliente(pergunta_consultar_cliente))
+                try {
+                    console.table(await this.consultas.buscar_consultas_Cliente(pergunta_consultar_cliente))
+                }catch (error) {
+                }
                 this.exibirMenu();
+
                 break;
 
             case "5":// DELETA AS CONSULTAS INDESEJADAS
                 console.table(await this.consultas.listarTodasConsultas())
                 let pergunta_consulta_deletar = this.prompt("Digite o id da consulta que quer deletar: ")
-                await this.consultas.deletar_consulta(pergunta_consulta_deletar)
+                try {
+                    await this.consultas.deletar_consulta(pergunta_consulta_deletar)
+                }catch (error) {
+                    console.log("Erro ao deletar consulta: ", error.message)
+                }
                 await this.exibirMenu();
                 break;
 
@@ -123,7 +139,11 @@ export class ConsultasView {
                         console.log("Tabela de clientes")
                         console.table(await this.clientes.listarClientes())
                         let pergunta_botar_cpf = this.prompt("Digite qual cpf deseja botar: ")
-                        await this.consultas.mudar_cpf_cliente(pergunta_mudar_cpf, pergunta_botar_cpf)
+                        try {
+                            await this.consultas.mudar_cpf_cliente(pergunta_mudar_cpf, pergunta_botar_cpf)
+                        }catch (error) {
+                            console.log("Erro ao mudar cpf: ", error.message)
+                        }
                         this.exibirMenu();
                         break;
 
@@ -137,7 +157,12 @@ export class ConsultasView {
 
                         let pergunta_mudar_advogado = this.prompt("Digite o id da consulta que deseja mudar: ")
                         let pergunta_botar_advogado = this.prompt("Digite o id do advogado para botar: ")
-                        await this.consultas.mudar_advogado(pergunta_mudar_advogado, pergunta_botar_advogado)
+                        try {
+                            await this.consultas.mudar_advogado(pergunta_mudar_advogado, pergunta_botar_advogado)
+                        }
+                        catch (error) {
+                            console.log("Erro ao mudar advogado: ", error.message)
+                        }
                         this.exibirMenu()
                         break;
                         
@@ -151,7 +176,12 @@ export class ConsultasView {
                         console.table(await this.advogados.listarAdvogados())
                         let pergunta_mudar_data = this.prompt("Digite o id da consulta que deseja mudar: ")
                         let pergunta_botar_data = this.prompt("Digite para botar a data desejada: ")
-                        await this.consultas.mudar_data(pergunta_mudar_data, pergunta_botar_data)
+                        try {
+                            await this.consultas.mudar_data(pergunta_mudar_data, pergunta_botar_data)
+                        }
+                        catch (error) {
+                            console.log("Erro ao mudar data: ", error.message)
+                        }
                         this.exibirMenu()
                         break;
 

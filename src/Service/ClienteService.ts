@@ -7,7 +7,7 @@ import { ConsultasService } from "./ConsultasService";
 
 //CLASSE CLIETNE SERVICE
 export class ClienteService {
-  private servi_consulta: ConsultasService
+  private servi_consulta: ConsultasService;
   private repo: ClienteRepository;
 
 
@@ -91,7 +91,7 @@ export class ClienteService {
     if (!cliente) {
       throw new Error("Cliente não encontrado");
     }
-    if (cliente.length === cliente_consultas.length) {
+    if (cliente_consultas.length > 0) {
       throw new Error("Esse cliente não pode ser deletado pois tem consultas agendadas!!")
     }else{
 

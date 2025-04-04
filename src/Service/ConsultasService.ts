@@ -6,8 +6,10 @@ import { Consultas } from "../Entity/Consultas";
 import { AdvogadoService } from "./AdvogadoService";
 import { Validacoes } from "../Util/Verificacoes";
 
+
 //CLASSE CONSULTAS SERVICE
 export class ConsultasService {
+  
     private servi_adv: AdvogadoService
     private repo: ConsultasRepository
 
@@ -39,10 +41,14 @@ export class ConsultasService {
 
     // METODO INSERE CONSULTAS
     public async inserirConsulta(cpf_clientes: string, id_advogado: number, dataAgendada: string, horario: Date) {
+        // let lista2 = await this.servi_cliente.buscarClientesPorCpf(cpf_clientes)
+        // if (lista2.length === 0 ) {
+        //     throw new Error("Esse cliente não existe!!")
+        // }
         let lista: Advogados[] = []
         lista = await this.servi_adv.buscar_adv_id(id_advogado)
 
-        if (lista.length === 0) {
+        if (lista.length === 0 || lista === undefined) {
             throw new Error("Esse advogado não existe!!")
         }
 
@@ -99,9 +105,10 @@ export class ConsultasService {
 
 
     // METODO QUE DELETA AS CONSULTAS
-    public async deletar_consulta(id: number): Promise<void> {
-        let consultas = this.buscar_consultas(id)
-        if (consultas === undefined) {
+    public async deletar_consulta(id: number) {
+        let consulta: Consultas[] = []
+        consulta = await this.repo.buscar_consulta(id)
+        if (consulta.length === 0) {
             throw new Error("Consulta não encontrada")
         }
         await this.repo.deletar_consulta(id)

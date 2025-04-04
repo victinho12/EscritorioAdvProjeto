@@ -1,6 +1,5 @@
 // IMPORTA OS DADOS
 import promptSync from "prompt-sync";
-
 import { ClienteService } from "../Service/ClienteService";
 
 

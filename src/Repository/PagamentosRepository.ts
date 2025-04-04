@@ -52,7 +52,6 @@ export class PagamentosRepository {
     const buscar_pagamento: Pagamentos[] = []
     
     for (let row of resultado.rows) {
-      console.log(row)
       let pagamento = new Pagamentos(
         row.id,
         row.id_consulta,
