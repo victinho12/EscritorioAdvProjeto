@@ -39,7 +39,6 @@ export class ClienteRepository {
     const buscarClientes: Cliente[] = [];
     
     for (let row of result.rows) {
-      console.log(row)
       let cliente = new Cliente(
         row.cpf,
         row.nome,

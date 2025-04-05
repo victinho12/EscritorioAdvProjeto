@@ -43,14 +43,10 @@ export class ClienteService {
     datanascimento: string,
     observacoes: string
   ) {
-    let clientes = await this.buscarClientesPorCpf(cpf)
-    if (clientes.length == clientes.length) {
-      throw new Error("Esse cliente já existe!!");
+    // VALIDAR CPF
+    if (Validacoes.validar_CPF(cpf) === false) {
+      throw new Error("Cpf invalido");
     }
-    if (!Validacoes.validar_CPF(cpf)) {
-      throw new Error("CPF inválido");
-    }
-
 
     // VALIDAR DATA DE NASCIMENTO
     if (!/^\d{2}\/\d{2}\/\d{4}$/.test(datanascimento)) {
@@ -84,22 +80,16 @@ export class ClienteService {
 
   //METODO QUE DELETA CLIENTES DO SISTEMA
   public async deletarCliente(cpf: string) {
-    let cliente: Cliente[] = []
-    cliente = await this.buscarClientesPorCpf(cpf)
-    
-    let cliente_consultas = await this.servi_consulta.buscar_consultas_Cliente(cpf)
-    if (!cliente) {
-      throw new Error("Cliente não encontrado");
-    }
-    if (cliente_consultas.length > 0) {
-      throw new Error("Esse cliente não pode ser deletado pois tem consultas agendadas!!")
-    }else{
-
       let lista: Cliente[] = await this.repo.deletarCliente(cpf);
-      return lista;
-    }
-
-
+      if (lista.length === 0) {
+        throw new Error("Cliente não encontrado!!")
+      }
+      let consulta = await this.servi_consulta.buscar_consultas_Cliente(cpf)
+      if (consulta.length > 0) {
+        throw new Error("Cliente não pode ser deletado pois tem consultas agendadas")
+      }
+      await this.repo.deletarCliente(cpf)
+  
   }
   
   

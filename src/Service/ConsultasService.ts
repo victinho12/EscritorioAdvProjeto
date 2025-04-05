@@ -1,7 +1,7 @@
 //IMPORTANDO DADOS
 import { Advogados } from "../Entity/Advogado";
 import { ConsultasRepository } from "../Repository/ConsultaRepository";
-
+import { ClienteRepository } from "../Repository/ClienteRepository";
 import { Consultas } from "../Entity/Consultas";
 import { AdvogadoService } from "./AdvogadoService";
 import { Validacoes } from "../Util/Verificacoes";
@@ -9,13 +9,14 @@ import { Validacoes } from "../Util/Verificacoes";
 
 //CLASSE CONSULTAS SERVICE
 export class ConsultasService {
-  
+    private servi_cliente: ClienteRepository
     private servi_adv: AdvogadoService
     private repo: ConsultasRepository
 
 
     //CONSTRUTOR DA CLASSE
     constructor() {
+        this.servi_cliente = new ClienteRepository()
         this.servi_adv = new AdvogadoService()
         this.repo = new ConsultasRepository()
     }
@@ -41,10 +42,10 @@ export class ConsultasService {
 
     // METODO INSERE CONSULTAS
     public async inserirConsulta(cpf_clientes: string, id_advogado: number, dataAgendada: string, horario: Date) {
-        // let lista2 = await this.servi_cliente.buscarClientesPorCpf(cpf_clientes)
-        // if (lista2.length === 0 ) {
-        //     throw new Error("Esse cliente não existe!!")
-        // }
+        let lista2 = await this.servi_cliente.BuscarCLientePorCpf(cpf_clientes)
+        if (lista2.length === 0 ) {
+            throw new Error("Esse cliente não existe!!")
+        }
         let lista: Advogados[] = []
         lista = await this.servi_adv.buscar_adv_id(id_advogado)
 
